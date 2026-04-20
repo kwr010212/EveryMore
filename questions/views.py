@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import Question
 
 def home(request):
-    return render(request, 'home.html')
+    questions = Question.objects.all()
+    return render(request, 'home.html', {'questions': questions})
