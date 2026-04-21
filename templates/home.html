@@ -2,13 +2,114 @@
 <html>
 <head>
     <title>EveryMore</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 420px;
+            margin: auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+
+        select {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            margin: 10px 5px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-main {
+            background-color: #6c5ce7;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background-color: #5a4bcf;
+        }
+
+        .btn-sub {
+            background-color: #00b894;
+            color: white;
+        }
+
+        .btn-sub:hover {
+            background-color: #019875;
+        }
+
+        .question {
+            margin-top: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d3436;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+    </style>
+
 </head>
 <body>
-    <h1>질문 리스트</h1>
 
-    {% for q in questions %}
-        <p>{{ q.text }}</p>
-    {% endfor %}
+    <div class="container">
+        <h1>EveryMore</h1>
+
+        <form method="get">
+            <select name="category">
+                <option value="">전체 카테고리</option>
+                {% for c in categories %}
+                    <option value="{{ c.id }}"
+                        {% if selected_category == c.id|stringformat:"s" %}selected{% endif %}>
+                        {{ c.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <br>
+
+            <button class="btn btn-main" type="submit">
+                🎲 질문 새로 뽑기
+            </button>
+        </form>
+
+        <button class="btn btn-sub">
+            🤖 AI 질문 생성 (준비중)
+        </button>
+
+        <div class="question">
+            {% if question %}
+                "{{ question.text }}"
+            {% else %}
+                질문이 없습니다.
+            {% endif %}
+        </div>
+    </div>
 
 </body>
 </html>
