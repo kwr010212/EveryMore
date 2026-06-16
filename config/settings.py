@@ -25,7 +25,11 @@ SECRET_KEY = "django-insecure-&2s1yfwc#+^=i_i&1f_8j7eem_ua-1swge2sf-g*r0xlt5ha(z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'kwr010212.duckdns.org',
+    '127.0.0.1',
+    'localhost',
+]
 
 
 # Application definition
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'questions',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +126,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+FORCE_SCRIPT_NAME = "/everymore"
+
+SECURE_PROXY_SSL_HEADER = (
+    'HTTP_X_FORWARDED_PROTO',
+    'https'
+)

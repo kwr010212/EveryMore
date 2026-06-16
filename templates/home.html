@@ -2,114 +2,500 @@
 <html>
 <head>
     <title>EveryMore</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial;
-            background: linear-gradient(135deg, #74b9ff, #a29bfe);
-            text-align: center;
-            padding: 50px;
+
+        footer{
+            text-align:center;
+
+            padding:30px;
+
+            color:#64748b;
         }
 
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            width: 420px;
-            margin: auto;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
         }
 
-        h1 {
-            margin-bottom: 20px;
-            color: #2d3436;
+        body{
+            font-family:Arial,sans-serif;
+            background:linear-gradient(135deg,#74b9ff,#a29bfe);
+            min-height:100vh;
+            padding:20px;
         }
 
-        select {
-            width: 80%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
+        .container{
+            max-width:900px;
+            margin:auto;
         }
 
-        .btn {
-            padding: 10px 15px;
-            margin: 10px 5px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
+        .logo{
+            text-align:center;
+            color:white;
+            margin-bottom:20px;
         }
 
-        .btn-main {
-            background-color: #6c5ce7;
-            color: white;
+        .logo h1{
+            font-size:58px;
+            margin-bottom:10px;
         }
 
-        .btn-main:hover {
-            background-color: #5a4bcf;
+        .logo p{
+            opacity:0.9;
+            font-size:18px;
         }
 
-        .btn-sub {
-            background-color: #00b894;
-            color: white;
+        @keyframes slideCard{
+            from{
+                opacity:0;
+                transform:translateX(30px);
+            }
+            to{
+                opacity:1;
+                transform:translateX(0);
+            }
         }
 
-        .btn-sub:hover {
-            background-color: #019875;
+        @keyframes swipeOut{
+
+            from{
+                opacity:1;
+                transform:translateX(0);
+            }
+
+            to{
+                opacity:0;
+                transform:translateX(-80px);
+            }
+
         }
 
-        .question {
-            margin-top: 25px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #2d3436;
-            animation: fadeIn 0.5s;
+        @keyframes swipeIn{
+
+            from{
+                opacity:0;
+                transform:translateX(80px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateX(0);
+            }
+
         }
 
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(10px);}
-            to {opacity: 1; transform: translateY(0);}
+        .swipe-out{
+            animation:swipeOut .25s forwards;
         }
 
+        .swipe-in{
+            animation:swipeIn .25s forwards;
+        }
+
+        @keyframes cardSwipeOut{
+            to{
+                transform:translateX(-100px);
+                opacity:0;
+            }
+        }
+
+        @keyframes cardSwipeIn{
+            from{
+                transform:translateX(100px);
+                opacity:0;
+            }
+            to{
+                transform:translateX(0);
+                opacity:1;
+            }
+        }
+
+        .badge{
+            padding:8px 15px;
+            border-radius:20px;
+            color:white;
+            font-size:13px;
+            margin:4px;
+            display:inline-block;
+        }
+
+        .badge-ai{
+            background:#00b894;
+        }
+
+        .badge-category{
+
+            background:#6c5ce7;
+            padding:10px 20px;
+            font-size:14px;
+            margin-bottom:40px;
+        }
+
+        .question-text{
+
+            font-size:38px;
+            font-weight:700;
+            text-align:center;
+            max-width:80%;
+            color:#2d3436;
+            line-height:1.5;
+        }
+
+        .selector-card{
+            margin-top:20px;
+            background:white;
+            border-radius:20px;
+            padding:15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        select{
+            width:100%;
+            padding:14px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            font-size:16px;
+        }
+
+        .bottom-menu{
+            margin-top:20px;
+            background:white;
+            border-radius:25px;
+            padding:15px;
+            display:flex; /* Grid 대신 Flex로 변경하여 버튼 개수에 따라 유연하게 대처 */
+            gap:10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            align-items:center;
+        }
+
+        .bottom-menu form{
+            margin:0;
+            flex: 1;
+        }
+
+        /* <a> 태그와 <button>을 통합한 메뉴 버튼 스타일 */
+        .menu-btn{
+            flex: 1;
+            height:55px;
+            border:none;
+            border-radius:15px;
+            padding:14px 10px;
+            cursor:pointer;
+            font-weight:bold;
+            color:white;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            transition:.2s;
+            font-size: 16px;
+        }
+
+        .menu-btn:hover{
+            transform:translateY(-2px);
+        }
+
+        /* 로딩 중일 때 스타일 */
+        .menu-btn.disabled {
+            background-color: #b2bec3 !important;
+            color: #636e72 !important;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-question{
+            background:#6c5ce7;
+        }
+
+        .btn-ai{
+            background:#00b894;
+        }
+
+        .btn-save{
+            background:#fdcb6e;
+            color:#2d3436;
+        }
+
+        .btn-list{
+            background:#0984e3;
+        }
+
+        .user-box{
+            display:flex;
+            justify-content:flex-end;
+            align-items:center;
+            gap:10px;
+            margin-bottom:20px;
+            color:white;
+        }
+
+        /* 로그인을 <a> 태그 자체로 스타일링 */
+        .login-btn{
+            background:white;
+            color:#6c5ce7;
+            border:none;
+            border-radius:12px;
+            padding:10px 15px;
+            font-weight:bold;
+            cursor:pointer;
+            text-decoration:none;
+            display:inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .question-card{
+
+            background:#ffffff;
+
+            border-radius:35px;
+
+            min-height:500px;
+
+            width:100%;
+
+            padding:40px;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+
+            position:relative;
+
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.15);
+
+            animation:slideCard .4s ease;
+        }
+
+        @media(max-width:768px){
+            .question-card{
+                min-height:420px;
+                padding:25px;
+            }
+
+            .question-text{
+                font-size:28px;
+            }
+
+            .menu-btn{
+                font-size:12px;
+                height:50px;
+            }
+        }
     </style>
-
 </head>
 <body>
 
-    <div class="container">
-        <h1>EveryMore</h1>
+<div class="container">
 
-        <form method="get">
-            <select name="category">
+    {% if user.is_authenticated %}
+        <div class="user-box">
+            👋 {{ user.username }}님
+            <a href="{% url 'logout' %}" class="login-btn">로그아웃</a>
+        </div>
+    {% else %}
+        <div class="user-box">
+            <a href="{% url 'login' %}" class="login-btn">로그인</a>
+            <a href="{% url 'signup' %}" class="login-btn">회원가입</a>
+        </div>
+    {% endif %}
+
+    <div class="logo">
+        <h1>EveryMore</h1>
+        <p>더 깊은 대화를 위한 질문</p>
+    </div>
+
+    <div
+        class="question-card"
+        id="questionCard"
+    >
+        {% if question %}
+            {% if question.is_ai_generated %}
+                <div class="badge badge-ai">
+                    🤖 AI 생성 질문
+                </div>
+            {% endif %}
+            <div
+                class="badge badge-category"
+                id="categoryBadge"
+            >
+                {{ question.category.name }}
+            </div>
+            <div
+                class="question-text"
+                id="questionText"
+            >
+                {{ question.text }}
+            </div>
+            {% else %}
+                <div
+                    class="question-text"
+                    id="questionText"
+                >
+                    질문이 없습니다.
+                </div>
+            {% endif %}
+    </div>
+
+    <div class="selector-card">
+        <form method="get" id="categoryForm">
+            <select name="category" onchange="document.getElementById('categoryForm').submit()">
                 <option value="">전체 카테고리</option>
                 {% for c in categories %}
-                    <option value="{{ c.id }}"
-                        {% if selected_category == c.id|stringformat:"s" %}selected{% endif %}>
+                    <option value="{{ c.id }}" {% if selected_category == c.id|stringformat:"s" %}selected{% endif %}>
                         {{ c.name }}
                     </option>
                 {% endfor %}
             </select>
-
-            <br>
-
-            <button class="btn btn-main" type="submit">
-                🎲 질문 새로 뽑기
-            </button>
         </form>
-
-        <button class="btn btn-sub">
-            🤖 AI 질문 생성 (준비중)
-        </button>
-
-        <div class="question">
-            {% if question %}
-                "{{ question.text }}"
-            {% else %}
-                질문이 없습니다.
-            {% endif %}
-        </div>
     </div>
 
+    <div class="bottom-menu">
+        <button
+            type="button"
+            class="menu-btn btn-question"
+            onclick="loadQuestion()"
+        >
+            🎲 새질문
+        </button>
+
+        <a href="{% url 'my_questions' %}" class="menu-btn btn-list">
+            📚 목록
+        </a>
+
+        {% if user.is_authenticated %}
+            <a
+                href="#"
+                class="menu-btn btn-ai"
+                onclick="generateAIQuestion(); return false;"
+            >
+                🤖 AI
+            </a>
+
+            {% if question %}
+                <a href="{% url 'save_question' question.id %}" class="menu-btn btn-save">
+                    ⭐ 저장
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function loadingAI(event, element){
+    // 이미 클릭되어 'disabled' 클래스가 붙었다면 추가 클릭 방지
+    if(element.classList.contains('disabled')){
+        event.preventDefault();
+        return;
+    }
+    
+    // 텍스트 변경 및 스타일 변경
+    element.innerText = "생성중...";
+    element.classList.add('disabled');
+    
+    // 버튼 해제가 아니라 페이지가 이동하므로 본 스크립트에서는 disabled만 적용하고 이동을 허용합니다.
+}
+
+
+
+
+    async function loadQuestion(){
+
+        const card =
+            document.getElementById(
+                "questionCard"
+            );
+
+        card.classList.remove(
+            "swipe-in"
+        );
+
+        card.classList.add(
+            "swipe-out"
+        );
+
+        await new Promise(
+            resolve =>
+            setTimeout(resolve,700)
+        );
+
+        let category =
+            document.querySelector(
+                'select[name="category"]'
+            ).value;
+
+        let response =
+            await fetch(
+                `/everymore/api/random-question/?category=${category}`
+            );
+
+        let data =
+            await response.json();
+
+        document.getElementById(
+            "questionText"
+        ).innerText = data.text;
+
+        document.getElementById(
+            "categoryBadge"
+        ).innerText = data.category;
+
+        card.classList.remove(
+            "swipe-out"
+        );
+
+        card.classList.add(
+            "swipe-in"
+        );
+
+    }
+
+    async function generateAIQuestion(){
+
+        const questionText =
+            document.getElementById(
+                "questionText"
+            );
+
+        const category =
+            document.querySelector(
+                'select[name="category"]'
+            ).value;
+
+        questionText.innerHTML =
+            "🤖 질문 생성 중...";
+
+        let response =
+            await fetch(
+                `/everymore/api/ai-generate/?category=${category}`
+            );
+
+        console.log(response);
+
+        let data =
+            await response.json();
+
+        console.log(data);
+
+        let data =
+            await response.json();
+
+        document.getElementById(
+            "questionText"
+        ).innerText = data.text;
+
+        document.getElementById(
+            "categoryBadge"
+        ).innerText = data.category;
+    }
+
+
+</script>
+<footer>
+    © 2026 Kim WooRim
+</footer>
 </body>
 </html>
